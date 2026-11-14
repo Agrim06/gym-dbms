@@ -12,6 +12,15 @@ class Member(BaseSchema):
     tid: int | None = None
     joining_date: date
 
+class MemberCreate(BaseModel):
+    name: str
+    fees: int
+    tid: int | None = None
+    joining_date: date
+class MemberUpdate(BaseModel):
+    name: str | None = None
+    fees: int | None = None
+    tid: int | None = None
 class Trainer(BaseSchema):
     tid: int
     name: str
