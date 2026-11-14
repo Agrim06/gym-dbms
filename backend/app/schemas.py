@@ -27,6 +27,10 @@ class Trainer(BaseSchema):
     salary: int
     email: str
 
+class TrainerCreate(BaseSchema):
+    name: str
+    salary: int
+    email: str
 class Membership(BaseSchema):
     membership_id: int
     member_id: int

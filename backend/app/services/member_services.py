@@ -1,7 +1,7 @@
 from typing import List, Optional
 from sqlalchemy.orm import Session
 from .. import models
-from ..schemas import Member , MemberCreate
+from ..schemas import Member , MemberCreate, MemberUpdate
 
 def create_member(db: Session, member_data: MemberCreate):
     db_member = models.Member(
@@ -22,7 +22,7 @@ def get_all_members(db: Session, skip: int = 0, limit: int = 100) -> list[models
 def get_member_by_id(db: Session, member_id: int) -> Optional[models.Member]:
     return db.query(models.Member).filter(models.Member.uid == member_id).first()
 
-def update_member(db: Session, member_id : int , update_data : schemas.MemberUpdate):
+def update_member(db: Session, member_id : int , update_data : MemberUpdate):
     db_member = db.query(models.Member).filter(models.Member.uid == member_id).first()
     if not db_member:
         return None
