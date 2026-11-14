@@ -1,30 +1,45 @@
-from fastapi import FastAPI
 from pydantic import BaseModel
 from datetime import date
 
-class Member(BaseModel):
-    uid : int
-    name : str
-    fees : int
-    tid : int
-    joining_date : date
+class BaseSchema(BaseModel):
+    class Config:
+        from_attributes = True
 
-class Trainer(BaseModel):
-    tid : int
-    name : str
-    salary : int
-    email : str
+class Member(BaseSchema):
+    uid: int
+    name: str
+    fees: int
+    tid: int | None = None
+    joining_date: date
 
-class Membership(BaseModel):
+class Trainer(BaseSchema):
+    tid: int
+    name: str
+    salary: int
+    email: str
+
+class Membership(BaseSchema):
     membership_id: int
-    member_id : int
-    start_date : date
-    end_date : date
-    status : str
+    member_id: int
+    start_date: date
+    end_date: date
+    status: str
 
-class Payment(BaseModel):
-    pid : int
-    membership_id : int
-    amount : int
-    date : date
-    status : str
+class Payment(BaseSchema):
+    pid: int
+    member_id: int
+    amount: int
+    date: date
+    status: str
+
+class Attendance(BaseSchema):
+    attendance_id: int
+    member_id: int
+    date: date
+    status: str
+
+class WorkoutSchedule(BaseSchema):
+    schedule_id: int
+    member_id: int
+    trainer_id: int
+    workout_details: str
