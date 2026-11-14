@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
-from .services import member_services, trainer_services
+from .services import member_services, trainer_services, membership_services
 from .database import get_db
-from .schemas import Member, Trainer, TrainerCreate, Membership, Payment, MemberCreate, MemberUpdate
+from .schemas import Member, Trainer, TrainerCreate, Membership,MembershipCreate, MembershipRenew, Payment, MemberCreate, MemberUpdate
 from . import models
 from typing import List
 
@@ -63,3 +63,33 @@ def get_trainer_members(tid: int, db: Session = Depends(get_db)):
     if not trainer:
         raise HTTPException(status_code=404, detail=f"Trainer with id '{tid}' not found")
     return trainer_services.get_trainer_members(db, tid)
+
+
+@router.post("/memberships", response_model= Membership)
+def create_membership(payload : MembershipCreate , db : Session = Depends(get_db)):
+    membership = membership_services.new_membership(
+        db=db,
+        member_id=payload.member_id,
+        start_date=payload.start_date,
+        end_date=payload.end_date,
+        status=payload.status
+    )
+    if not membership:
+        raise HTTPException(status_code=404, detail=f"Member with id '{payload.member_id}' not found")
+    return membership
+
+@router.put("/memberships/{membership_id}/renew", response_model= Membership)
+def renew_membership(payload : MembershipRenew, membership_id : int,  db : Session = Depends(get_db)):
+    membership = membership_services.renew_membership(
+        db = db,
+        membership_id=membership_id,
+        end_date=payload.end_date,
+        status= payload.status
+    )
+    if not membership:
+        raise HTTPException(status_code=404, detail=f"Failed to renew '{membership_id}' not found")
+    return membership
+
+@router.get("/memberships/expiring", response_model = List[Membership])
+def expiring_memberships(db : Session =Depends(get_db)):
+     return membership_services.expiring_memberships(db, days=7)
