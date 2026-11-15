@@ -37,6 +37,7 @@ class Membership(BaseSchema):
     start_date: date
     end_date: date
     status: str
+    
 class MembershipCreate(BaseModel):
     member_id: int
     start_date: date
@@ -48,6 +49,12 @@ class MembershipRenew(BaseModel):
     status: str = "Active"
 class Payment(BaseSchema):
     pid: int
+    member_id: int
+    amount: int
+    date: date
+    status: str
+
+class PaymentCreate(BaseSchema):
     member_id: int
     amount: int
     date: date

@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
-from .services import member_services, trainer_services, membership_services
+from .services import member_services, trainer_services, membership_services, payment_services
 from .database import get_db
-from .schemas import Member, Trainer, TrainerCreate, Membership,MembershipCreate, MembershipRenew, Payment, MemberCreate, MemberUpdate
+from .schemas import Member, Trainer, TrainerCreate, Membership,MembershipCreate, MembershipRenew, Payment, PaymentCreate,  MemberCreate, MemberUpdate
 from . import models
 from typing import List
 
@@ -93,3 +93,23 @@ def renew_membership(payload : MembershipRenew, membership_id : int,  db : Sessi
 @router.get("/memberships/expiring", response_model = List[Membership])
 def expiring_memberships(db : Session =Depends(get_db)):
      return membership_services.expiring_memberships(db, days=7)
+
+
+@router.post("/payments/create", response_model= PaymentCreate)
+def create_payment(payload : Payment, db : Session = Depends(get_db)):
+    payment = payment_services.create_payment(db, payload)
+    return payment
+
+@router.get("/payments/member/{uid}" , response_model=List[Payment])
+def get_payment(uid : int, db:Session = Depends(get_db)):
+    history = payment_services.get_payment(db, uid)
+
+    if not history:
+        raise HTTPException(status_code=404, detail=f"Payment with id '{uid}' not found")
+    return history
+
+@router.get("/payments/revenue", response_model= list[Payment])
+def get_revenue(db : Session = Depends(get_db)):
+    revenue = payment_services.get_revenue(db)
+    
+    return {"total_revenue": total}
