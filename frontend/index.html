@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gym Management System — Swiss International Style</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="header">
+    <div class="header__inner">
+      <div class="brand">
+        GYM MANAGEMENT DASHBOARD
+      </div>
+      <nav class="nav" aria-label="Main Navigation">
+        <a class="nav__link active" data-target="overview" href="#overview">Overview</a>
+        <a class="nav__link" data-target="members" href="#members">Members</a>
+        <a class="nav__link" data-target="trainers" href="#trainers">Trainers</a>
+        <a class="nav__link" data-target="memberships" href="#memberships">Memberships</a>
+        <a class="nav__link" data-target="payments" href="#payments">Billing</a>
+        <a class="nav__link" data-target="attendance" href="#attendance">Attendance & Schedule</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Section 1: Overview & Metrics Band -->
+  <section id="overview" class="band">
+    <div class="grid">
+      <div class="col-12">
+        <span class="eyebrow">Database Overview</span>
+        <h1>Operational Metrics</h1>
+      </div>
+
+      <div class="col-3">
+        <div class="card">
+          <span class="card__label">Active Members</span>
+          <div class="card__value" id="kpi-members">—</div>
+          <p>Enrolled athletes</p>
+        </div>
+      </div>
+
+      <div class="col-3">
+        <div class="card">
+          <span class="card__label">Coaching Staff</span>
+          <div class="card__value" id="kpi-trainers">—</div>
+          <p>Active trainers</p>
+        </div>
+      </div>
+
+      <div class="col-3">
+        <div class="card">
+          <span class="card__label">Expiring Plans</span>
+          <div class="card__value" id="kpi-expiring">—</div>
+          <p>Due in 7 days</p>
+        </div>
+      </div>
+
+      <div class="col-3">
+        <div class="card">
+          <span class="card__label">Total Revenue</span>
+          <div class="card__value" id="kpi-revenue">—</div>
+          <p>Settled payments</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Members Directory -->
+  <section id="members">
+    <div class="grid">
+      <div class="col-8">
+        <span class="eyebrow">Registry</span>
+        <h2>Member Directory</h2>
+        <p>Comprehensive roster of registered gym members and trainer assignments.</p>
+      </div>
+      <div class="col-4" style="text-align: right; align-self: flex-end;">
+        <button class="button" id="btn-open-member-modal">+ Register Member</button>
+      </div>
+
+      <div class="col-12">
+        <div class="table-container">
+          <table class="table" id="members-table">
+            <thead>
+              <tr>
+                <th>UID</th>
+                <th>Full Name</th>
+                <th>Monthly Fees</th>
+                <th>Trainer ID</th>
+                <th>Joined</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="members-tbody">
+              <tr>
+                <td colspan="6" style="text-align:center;">Loading records...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Trainers -->
+  <section id="trainers" class="band">
+    <div class="grid">
+      <div class="col-8">
+        <span class="eyebrow">Staff Personnel</span>
+        <h2>Training Staff</h2>
+        <p>Certified gym trainers, compensation, and client assignments.</p>
+      </div>
+      <div class="col-4" style="text-align: right; align-self: flex-end;">
+        <button class="button" id="btn-open-trainer-modal">+ Add Trainer</button>
+      </div>
+
+      <div class="col-12">
+        <div class="table-container">
+          <table class="table" id="trainers-table">
+            <thead>
+              <tr>
+                <th>TID</th>
+                <th>Trainer Name</th>
+                <th>Email Contact</th>
+                <th>Salary</th>
+                <th>Roster</th>
+              </tr>
+            </thead>
+            <tbody id="trainers-tbody">
+              <tr>
+                <td colspan="5" style="text-align:center;">Loading trainers...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Memberships & Renewals -->
+  <section id="memberships">
+    <div class="grid">
+      <div class="col-12">
+        <span class="eyebrow">Subscriptions</span>
+        <h2>Memberships & Renewals</h2>
+        <p>Manage active gym memberships, term dates, and process plan renewals.</p>
+      </div>
+
+      <div class="col-6">
+        <div class="card">
+          <span class="card__label">New Membership Agreement</span>
+          <h3 style="margin-top: 0.5rem;">Issue Membership</h3>
+          <form id="form-new-membership" style="margin-top: 1.5rem;">
+            <div class="form-group">
+              <label class="form-label" for="mem-member-id">Member UID</label>
+              <input type="number" id="mem-member-id" class="form-input" required placeholder="e.g. 1">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="mem-start">Start Date</label>
+              <input type="date" id="mem-start" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="mem-end">End Date</label>
+              <input type="date" id="mem-end" class="form-input" required>
+            </div>
+            <button type="submit" class="button">Create Subscription</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-6">
+        <div class="card">
+          <span class="card__label">Extension Processing</span>
+          <h3 style="margin-top: 0.5rem;">Renew Membership</h3>
+          <form id="form-renew-membership" style="margin-top: 1.5rem;">
+            <div class="form-group">
+              <label class="form-label" for="renew-id">Membership ID</label>
+              <input type="number" id="renew-id" class="form-input" required placeholder="e.g. 1">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="renew-date">New End Date</label>
+              <input type="date" id="renew-date" class="form-input" required>
+            </div>
+            <button type="submit" class="button button--outline">Submit Renewal</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 5: Billing & Revenue -->
+  <section id="payments" class="band">
+    <div class="grid">
+      <div class="col-8">
+        <span class="eyebrow">Transactions</span>
+        <h2>Fee Payments & Ledger</h2>
+        <p>Record member fee transactions and verify overall revenue.</p>
+      </div>
+
+      <div class="col-6">
+        <div class="card">
+          <span class="card__label">Payment Entry</span>
+          <h3 style="margin-top: 0.5rem;">Log Payment</h3>
+          <form id="form-create-payment" style="margin-top: 1.5rem;">
+            <div class="form-group">
+              <label class="form-label" for="pay-member-id">Member UID</label>
+              <input type="number" id="pay-member-id" class="form-input" required placeholder="e.g. 1">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="pay-amount">Amount (USD / INR)</label>
+              <input type="number" id="pay-amount" class="form-input" required placeholder="e.g. 1500">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="pay-date">Transaction Date</label>
+              <input type="date" id="pay-date" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="pay-status">Status</label>
+              <select id="pay-status" class="form-select">
+                <option value="Completed">Completed</option>
+                <option value="Pending">Pending</option>
+              </select>
+            </div>
+            <button type="submit" class="button">Record Transaction</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-6">
+        <div class="card">
+          <span class="card__label">Financial Settlement</span>
+          <h3 style="margin-top: 0.5rem;">Total Revenue to Date</h3>
+          <div class="card__value" id="revenue-display">$0</div>
+          <p style="margin-top: 1rem;">Calculated in real-time from settled database payments using aggregate SQL
+            functions.</p>
+          <button class="button button--outline button--small" id="btn-refresh-revenue"
+            style="margin-top: 1.5rem;">Refresh Ledger</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 6: Attendance & Routines -->
+  <section id="attendance">
+    <div class="grid">
+      <div class="col-12">
+        <span class="eyebrow">Daily Operations</span>
+        <h2>Attendance & Workout Plans</h2>
+      </div>
+
+      <div class="col-6">
+        <div class="card">
+          <span class="card__label">Check-in Terminal</span>
+          <h3 style="margin-top: 0.5rem;">Daily Check-In</h3>
+          <form id="form-checkin" style="margin-top: 1.5rem;">
+            <div class="form-group">
+              <label class="form-label" for="att-member-id">Member UID</label>
+              <input type="number" id="att-member-id" class="form-input" required placeholder="Member UID">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="att-date">Check-in Date</label>
+              <input type="date" id="att-date" class="form-input" required>
+            </div>
+            <button type="submit" class="button">Register Check-In</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-6">
+        <div class="card">
+          <span class="card__label">Exercise Regimen</span>
+          <h3 style="margin-top: 0.5rem;">Assign Workout Schedule</h3>
+          <form id="form-schedule" style="margin-top: 1.5rem;">
+            <div class="form-group">
+              <label class="form-label" for="sch-member-id">Member UID</label>
+              <input type="number" id="sch-member-id" class="form-input" required placeholder="e.g. 1">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="sch-trainer-id">Trainer TID</label>
+              <input type="number" id="sch-trainer-id" class="form-input" required placeholder="e.g. 1">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="sch-details">Workout Details</label>
+              <input type="text" id="sch-details" class="form-input" required placeholder="e.g. Upper Body Hypertrophy">
+            </div>
+            <button type="submit" class="button button--outline">Save Schedule</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal: Register Member -->
+  <div class="modal" id="modal-member" role="dialog" aria-modal="true" aria-labelledby="modal-member-title">
+    <div class="modal__content">
+      <div class="modal__header">
+        <h3 id="modal-member-title">Register Member</h3>
+        <button class="button button--outline button--small" id="btn-close-member-modal"
+          aria-label="Close dialog">✕</button>
+      </div>
+      <form id="form-create-member">
+        <div class="form-group">
+          <label class="form-label" for="mem-name">Full Name</label>
+          <input type="text" id="mem-name" class="form-input" required placeholder="e.g. John Doe">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="mem-fees">Monthly Fees</label>
+          <input type="number" id="mem-fees" class="form-input" required placeholder="e.g. 1200">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="mem-tid">Trainer TID (Optional)</label>
+          <input type="number" id="mem-tid" class="form-input" placeholder="Trainer ID or leave blank">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="mem-join">Joining Date</label>
+          <input type="date" id="mem-join" class="form-input" required>
+        </div>
+        <button type="submit" class="button" style="width: 100%;">Complete Enrollment</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Add Trainer -->
+  <div class="modal" id="modal-trainer" role="dialog" aria-modal="true" aria-labelledby="modal-trainer-title">
+    <div class="modal__content">
+      <div class="modal__header">
+        <h3 id="modal-trainer-title">Add Trainer</h3>
+        <button class="button button--outline button--small" id="btn-close-trainer-modal"
+          aria-label="Close dialog">✕</button>
+      </div>
+      <form id="form-create-trainer">
+        <div class="form-group">
+          <label class="form-label" for="tr-name">Trainer Name</label>
+          <input type="text" id="tr-name" class="form-input" required placeholder="e.g. Alex Rivera">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="tr-email">Email Address</label>
+          <input type="email" id="tr-email" class="form-input" required placeholder="alex@gym.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="tr-salary">Salary</label>
+          <input type="number" id="tr-salary" class="form-input" required placeholder="e.g. 45000">
+        </div>
+        <button type="submit" class="button" style="width: 100%;">Add Trainer</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: View Trainer Members -->
+  <div class="modal" id="modal-trainees" role="dialog" aria-modal="true" aria-labelledby="modal-trainees-title">
+    <div class="modal__content">
+      <div class="modal__header">
+        <h3 id="modal-trainees-title">Assigned Trainees</h3>
+        <button class="button button--outline button--small" id="btn-close-trainees-modal"
+          aria-label="Close dialog">✕</button>
+      </div>
+      <div id="trainees-list-container">
+        <p>Loading trainees...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
