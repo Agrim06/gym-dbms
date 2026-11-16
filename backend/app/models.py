@@ -1,7 +1,6 @@
 from sqlalchemy import Column, Integer, String, Float, Boolean, DateTime, Date, ForeignKey
 from sqlalchemy.sql import func
 from .database import Base
-
 class Trainer(Base):
     __tablename__ = "trainers"
 
@@ -9,7 +8,6 @@ class Trainer(Base):
     name = Column(String, nullable=False)
     salary = Column(Integer, nullable=False)
     email = Column(String, nullable=False)
-
 
 class Member(Base):
     __tablename__ = "members"
@@ -20,7 +18,6 @@ class Member(Base):
     fees = Column(Integer, nullable=False)
     joining_date = Column(DateTime, nullable=False)
 
-
 class Membership(Base):
     __tablename__ = "memberships"
 
@@ -29,7 +26,6 @@ class Membership(Base):
     start_date = Column(DateTime, nullable=False)
     end_date = Column(DateTime, nullable=False)
     status = Column(String, nullable=False)
-
 
 class Payment(Base):
     __tablename__ = "payments"
@@ -40,7 +36,6 @@ class Payment(Base):
     date = Column(DateTime, nullable=False)
     status = Column(String, nullable=False)
 
-
 class Attendance(Base):
     __tablename__ = "attendance_log"
 
@@ -48,7 +43,6 @@ class Attendance(Base):
     member_id = Column(Integer, ForeignKey("members.uid"), nullable=False)
     date = Column(DateTime, nullable=False)
     status = Column(String, nullable=False)
-
 
 class WorkoutSchedule(Base):
     __tablename__ = "schedules"

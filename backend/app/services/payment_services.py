@@ -19,7 +19,7 @@ def create_payment(db :Session, payment_data : PaymentCreate):
     return payment
 
 
-def get_payment(db:Session, member_id : int) -> List[models.Payment]:
+def get_payment(db: Session, member_id: int) -> list[models.Payment]:
     return db.query(models.Payment).filter(models.Payment.member_id == member_id).all()
 
 def get_revenue(db: Session) -> int:

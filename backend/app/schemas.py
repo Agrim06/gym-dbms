@@ -37,7 +37,7 @@ class Membership(BaseSchema):
     start_date: date
     end_date: date
     status: str
-    
+
 class MembershipCreate(BaseModel):
     member_id: int
     start_date: date
@@ -66,8 +66,18 @@ class Attendance(BaseSchema):
     date: date
     status: str
 
+class AttendanceHistory(BaseSchema):
+    attendance_id: int
+    date: date
+    status: str
+
 class WorkoutSchedule(BaseSchema):
     schedule_id: int
+    member_id: int
+    trainer_id: int
+    workout_details: str
+
+class WorkoutScheduleCreate(BaseSchema):
     member_id: int
     trainer_id: int
     workout_details: str
